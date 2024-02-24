@@ -1,0 +1,98 @@
+[
+  {
+    "firstname": "Harry",
+    "lastname": "Potter",
+    "gender": "Male",
+    "address": "4 Privet Drive",
+    "postcode": "54321",
+    "dob": "1980-07-31",
+    "zone": "",
+    "parent_id": "potterfamily@example.com",
+    "class_name": "Class 1A",
+    "school_name": "Demo School"
+  },
+  {
+    "firstname": "Hermione",
+    "lastname": "Granger",
+    "gender": "Female",
+    "address": "12 Grimmauld Place",
+    "postcode": "98765",
+    "dob": "1979-09-19",
+    "zone": "",
+    "parent_id": "grangerfamily@example.com",
+    "class_name": "Class 1B",
+    "school_name": "Demo School"
+  },
+  {
+    "firstname": "Ron",
+    "lastname": "Weasley",
+    "gender": "Male",
+    "address": "The Burrow",
+    "postcode": "12345",
+    "dob": "1980-03-01",
+    "zone": "",
+    "parent_id": "weasleyfamily@example.com",
+    "class_name": "Class 2A",
+    "school_name": "Demo School"
+  },
+  {
+    "firstname": "Luna",
+    "lastname": "Lovegood",
+    "gender": "Female",
+    "address": "The Lovegood House",
+    "postcode": "24680",
+    "dob": "1981-02-13",
+    "zone": "",
+    "parent_id": "lovegoodfamily@example.com",
+    "class_name": "Class 2B",
+    "school_name": "Demo School"
+  },
+  {
+    "firstname": "Draco",
+    "lastname": "Malfoy",
+    "gender": "Male",
+    "address": "Malfoy Manor",
+    "postcode": "13579",
+    "dob": "1980-06-05",
+    "zone": "",
+    "parent_id": "malfoyfamily@example.com",
+    "class_name": "Class 3A",
+    "school_name": "Demo School"
+  },
+  {
+    "firstname": "Ginny",
+    "lastname": "Weasley",
+    "gender": "Female",
+    "address": "The Burrow",
+    "postcode": "12345",
+    "dob": "1981-08-11",
+    "zone": "",
+    "parent_id": "weasleyfamily@example.com",
+    "class_name": "Class 3B",
+    "school_name": "Demo School"
+  },
+  {
+    "firstname": "Neville",
+    "lastname": "Longbottom",
+    "gender": "Male",
+    "address": "Longbottom House",
+    "postcode": "54321",
+    "dob": "1980-07-30",
+    "zone": "",
+    "parent_id": "longbottomfamily@example.com",
+    "class_name": "Class 4A",
+    "school_name": "Demo School"
+  },
+  {
+    "firstname": "Cho",
+    "lastname": "Chang",
+    "gender": "Female",
+    "address": "Chang Residence",
+    "postcode": "13579",
+    "dob": "1979-09-19",
+    "zone": "",
+    "parent_id": "changfamily@example.com",
+    "class_name": "Class 4B",
+    "school_name": "Demo School"
+  }
+]

@@ -1,0 +1,4 @@
+vehicleId,status,nextServicing,company_name,role
+K123X,Available,2024-08-15,Transport Company A,vehicle
+L456Y,In Use,2024-07-30,Transport Company B,vehicle
+M789Z,Servicing,2024-09-10,Transport Company C,vehicle

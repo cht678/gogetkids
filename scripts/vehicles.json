@@ -1,0 +1,23 @@
+[
+  {
+    "vehicleId": "K123X",
+    "status": "Available",
+    "nextServicing": "2024-08-15",
+    "company_name": "Transport Company 1",
+    "role": "vehicle"
+  },
+  {
+    "vehicleId": "L456Y",
+    "status": "In Use",
+    "nextServicing": "2024-07-30",
+    "company_name": "Transport Company 1",
+    "role": "vehicle"
+  },
+  {
+    "vehicleId": "M789Z",
+    "status": "Servicing",
+    "nextServicing": "2024-09-10",
+    "company_name": "Transport Company 1",
+    "role": "vehicle"
+  }
+]

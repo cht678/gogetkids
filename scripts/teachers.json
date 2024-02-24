@@ -1,0 +1,11 @@
+[
+  {
+  "email": "emily.wilson@example.com",
+  "firstName": "Emily",
+  "lastName": "Wilson",
+  "password": "Passwordabc",
+  "phoneNum": "8888888888",
+  "role": "teacher",
+  "school_name": "school1"
+  }
+]

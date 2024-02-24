@@ -1,0 +1,15 @@
+[
+  {
+    "firstname": "Cedric",
+    "lastname": "Diggory",
+    "gender": "Male",
+    "address": "Diggory Manor",
+    "postcode": "54321",
+    "dob": "1977-09-15",
+    "zone": "",
+    "parent_id": "testparent999@gmail.com",
+    "class_name": "Class 5A",
+    "school_name": "Test School 2",
+    "status": "New"
+  }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "class_name": "Class 1A",
+    "class_level": "Primary 1",
+    "teacherid": "emily.wilson@testschoolone.edu.sg",
+    "school_name": "Demo School"
+  },
+  {
+    "class_name": "Class 1B",
+    "class_level": "Primary 1",
+    "teacherid": "john.smith@testschoolone.edu.sg",
+    "school_name": "Demo School"
+  },
+  {
+    "class_name": "Class 2A",
+    "class_level": "Primary 2",
+    "teacherid": "alice.smith@testschoolone.edu.sg",
+    "school_name": "Demo School"
+  },
+  {
+    "class_name": "Class 2B",
+    "class_level": "Primary 2",
+    "teacherid": "lebron.james@testschoolone.edu.sg",
+    "school_name": "Demo School"
+  },
+  {
+    "class_name": "Class 3A",
+    "class_level": "Primary 3",
+    "teacherid": "jane.davis@testschoolone.edu.sg",
+    "school_name": "Demo School"
+  },
+  {
+    "class_name": "Class 3B",
+    "class_level": "Primary 3",
+    "teacherid": "emily.wilson@testschoolone.edu.sg",
+    "school_name": "Demo School"
+  },
+  {
+    "class_name": "Class 4A",
+    "class_level": "Primary 4",
+    "teacherid": "john.smith@testschoolone.edu.sg",
+    "school_name": "Demo School"
+  },
+  {
+    "class_name": "Class 4B",
+    "class_level": "Primary 4",
+    "teacherid": "alice.smith@testschoolone.edu.sg",
+    "school_name": "Demo School"
+  }
+]

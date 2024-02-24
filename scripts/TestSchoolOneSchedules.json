@@ -1,0 +1,26 @@
+[
+  {
+    "studentid": 190694,
+    "date": "2024-03-25",
+    "transport_type": "Bus",
+    "pickup_time": "07:00",
+    "dismissal_time": "14:00",
+    "school_name": "Demo School"
+  },
+  {
+    "studentid": 190695,
+    "date": "2024-03-26",
+    "transport_type": "Parent",
+    "pickup_time": "08:00",
+    "dismissal_time": "15:00",
+    "school_name": "Demo School"
+  },
+  {
+    "studentid": 190696,
+    "date": "2024-03-27",
+    "transport_type": "Guardian",
+    "pickup_time": "07:30",
+    "dismissal_time": "14:30",
+    "school_name": "Demo School"
+  }
+]

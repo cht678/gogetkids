@@ -1,0 +1,4 @@
+studentid,date,transport_type,pickup_time,dismissal_time,school_name
+190694,2024-03-25,Bus,07:00,14:00,Test School 1
+190695,2024-03-26,Parent,08:00,15:00,Test School 1
+190696,2024-03-27,Guardian,07:30,14:30,Test School 1

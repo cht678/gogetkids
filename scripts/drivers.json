@@ -1,0 +1,32 @@
+[
+  {
+    "email": "mike.malone@transportcompany1.com",
+    "firstName": "Mike",
+    "lastName": "Malone",
+    "password": "password123",
+    "phoneNum": "98724578",
+    "driverLicense": "S7685437L",
+    "role": "driver",
+    "company_name": "Transport Company 1"
+  },
+  {
+    "email": "jane.doe@transportcompany1.com",
+    "firstName": "Jane",
+    "lastName": "Doe",
+    "password": "pass456",
+    "phoneNum": "98765432",
+    "driverLicense": "S9876543M",
+    "role": "driver",
+    "company_name": "Transport Company 1"
+  },
+  {
+    "email": "john.smith@transportcompany1.com",
+    "firstName": "John",
+    "lastName": "Smith",
+    "password": "secret789",
+    "phoneNum": "98761234",
+    "driverLicense": "S9876123N",
+    "role": "driver",
+    "company_name": "Transport Company 1"
+  }
+]

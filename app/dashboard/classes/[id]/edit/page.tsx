@@ -18,16 +18,22 @@ export default async function Page({ params }: { params: { id: string } }) {
         const id = new ObjectId(params.id);
 
         console.log('Fetching data from PostgreSQL...');
+        console.log("Test", id);
 
-        // Your existing code for fetching data
-        const schoolName = await fetchSchoolName(); // Assuming fetchSchoolName doesn't need parameters
+        const classObject = await fetchClassById(id);
+        console.log('Class Object:', classObject);
+
+        if (!classObject || !classObject.school_name) {
+            console.error('Error: School name not found in the fetched data.');
+            // Handle the error or return an appropriate value
+            return <div>Error: School name not found in the fetched data.</div>;
+        }
+
+        const schoolName = classObject.school_name;
         console.log('School Name:', schoolName);
 
         const teachers = await fetchAllTeachersEmail(schoolName);
         console.log('Teachers:', teachers);
-
-        const classObject = await fetchClassById(id);
-        console.log('Class Object:', classObject);
 
         console.log('Data successfully fetched from PostgreSQL.');
 

@@ -1,45 +1,26 @@
-import { MongoClient, MongoClientOptions } from 'mongodb';
+import { Pool } from 'pg';
 import Form from '@/app/ui/classes/edit-form';
 import Breadcrumbs from '@/app/ui/classes/breadcrumbs';
-import { fetchClassById, fetchAllTeachersEmail, fetchSchoolName, fetchUserCredentials } from '@/app/lib/data';
+import { fetchClassById, fetchAllTeachersEmail, fetchSchoolName } from '@/app/lib/data';
 import { ObjectId } from 'mongodb';
 import jwt from 'jsonwebtoken';
 
-const mongoDBUrl = 'mongodb+srv://systemadmin1:Password123456@cluster0.3fkxfwy.mongodb.net/';
+const dbConfig = {
+    host: 'ep-rough-unit-92773982-pooler.us-east-1.postgres.vercel-storage.com',
+    database: 'verceldb',
+    port: 5432, // Change this if your PostgreSQL server uses a different port
+};
 
-let client: MongoClient;
+const pool = new Pool(dbConfig);
 
-async function connectToMongoDB() {
-    const options: MongoClientOptions = { useNewUrlParser: true, useUnifiedTopology: true } as MongoClientOptions;
-
-    try {
-        client = new MongoClient(mongoDBUrl, options);
-        await client.connect();
-        console.log('Connected to MongoDB');
-    } catch (error) {
-        console.error('Error connecting to MongoDB:', error);
-        throw error; // Propagate the error to the caller
-    }
-}
-
-export default async function Page({ params }: { params: { password: string; username: string; id: string } }) {
+export default async function Page({ params }: { params: { id: string } }) {
     try {
         const id = new ObjectId(params.id);
 
-        await connectToMongoDB();
-        console.log('Fetching data from MongoDB...');
+        console.log('Fetching data from PostgreSQL...');
 
-        const userCredentials = await fetchUserCredentials(params.username, params.password);
-
-        if (!userCredentials) {
-            console.error('Invalid username or password.');
-            throw new Error('Invalid username or password.');
-        }
-
-        const token = jwt.sign({ id: userCredentials._id, username: userCredentials.username }, process.env.TOKEN_SECRET!, { expiresIn: '1h' });
-        console.log('Generated token:', token);
-
-        const schoolName = await fetchSchoolName(userCredentials._id);
+        // Your existing code for fetching data
+        const schoolName = await fetchSchoolName(); // Assuming fetchSchoolName doesn't need parameters
         console.log('School Name:', schoolName);
 
         const teachers = await fetchAllTeachersEmail(schoolName);
@@ -48,9 +29,7 @@ export default async function Page({ params }: { params: { password: string; use
         const classObject = await fetchClassById(id);
         console.log('Class Object:', classObject);
 
-        console.log('Data successfully fetched from MongoDB.');
-
-        await client.close();
+        console.log('Data successfully fetched from PostgreSQL.');
 
         return (
             <main>
@@ -65,7 +44,7 @@ export default async function Page({ params }: { params: { password: string; use
         );
     } catch (error) {
         console.error('Error:', error);
-        console.error('Failed to fetch data from MongoDB.');
-        return <div>Error: Failed to fetch data from MongoDB. Please check the console for details.</div>;
+        console.error('Failed to fetch data from PostgreSQL.');
+        return <div>Error: Failed to fetch data from PostgreSQL. Please check the console for details.</div>;
     }
 }

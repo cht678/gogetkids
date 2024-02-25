@@ -25,12 +25,12 @@ async function executeWithRetry<T>(fn: () => Promise<T>): Promise<T> {
   throw new Error('Function execution failed.'); // Add a default return statement
 }
 
-export async function fetchSchoolName(id: string) {
+export async function fetchSchoolName() {
   return executeWithRetry(async () => {
     const client = await connect();
     const db = client.db('GoGetKids');
 
-    const objectId = new ObjectId(id);
+    const objectId = new ObjectId();
 
     const adminUser = await db.collection('adminusers').findOne(
       { _id: objectId }, // Query

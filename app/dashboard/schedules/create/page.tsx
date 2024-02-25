@@ -26,7 +26,7 @@ export default async function Page() {
   const sessionUserId = typeof decodedToken === 'string' ? decodedToken : decodedToken?.id;
 
   // Fetch the company name using the user ID
-  const schoolName = await fetchSchoolName(sessionUserId);
+  const schoolName = await fetchSchoolName();
   console.log('Company Name:', schoolName);
 
   const students = await fetchAllStudentIds(schoolName);

@@ -6,11 +6,11 @@ import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { createClass } from '@/app/lib/actions'; // Import the function for creating a class
 
-interface Props {
-  teachers: string[]; // Define the type of the teachers prop
-}
+// interface Props {
+//   teachers: string[]; // Define the type of the teachers prop
+// }
 
-export default function Form({ teachers }: Props) {
+export default function Form() {
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,28 +64,6 @@ export default function Form({ teachers }: Props) {
               className="peer block w-full rounded-md border border-gray-200 py-2 text-sm outline-2 placeholder:text-gray-500"
               required
             />
-          </div>
-        </div>
-
-        {/* Teacher's Email */}
-        <div className="mb-4">
-          <label htmlFor="teacher_email" className="mb-2 block text-sm font-medium">
-            Teacher Email
-          </label>
-          <div className="relative mt-2 rounded-md">
-            <select
-              id="teacher_email"
-              name="teacher_email"
-              className="peer block w-full rounded-md border border-gray-200 py-2 text-sm outline-2"
-              required
-            >
-              <option value="">Select Teacher Email</option>
-              {teachers.map((teacher, index) => (
-                <option key={index} value={teacher}>
-                  {teacher}
-                </option>
-              ))}
-            </select>
           </div>
         </div>
 

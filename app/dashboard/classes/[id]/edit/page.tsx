@@ -15,7 +15,6 @@ export default async function Page({ params }: { params: { id: string } }) {
         // Connect to MongoDB
         const client = new MongoClient(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true } as MongoClientOptions);
         await client.connect();
-        const db = client.db();
 
         // Log a message indicating the start of the operation
         console.log('Fetching data from MongoDB...');
@@ -30,7 +29,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         // Check if session token is null or undefined
         if (!token) {
             console.error('Session token is null or undefined.');
-            return null;
+            throw new Error('Session token is null or undefined.');
         }
 
         // Verify and decode the token
@@ -40,13 +39,13 @@ export default async function Page({ params }: { params: { id: string } }) {
             console.log('Decoded token data:', decodedToken);
         } catch (error) {
             console.error('Error verifying token:', error);
-            return null;
+            throw new Error('Error verifying token.');
         }
 
         // Check token expiry
         if (decodedToken.exp && decodedToken.exp < Math.floor(Date.now() / 1000)) {
             console.error('Token has expired.');
-            return null;
+            throw new Error('Token has expired.');
         }
 
         // Extract user ID from decoded token
@@ -54,7 +53,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
         // Fetch the school name using the user ID
         const schoolName = await fetchSchoolName(sessionUserId);
-        console.log('Company Name:', schoolName);
+        console.log('School Name:', schoolName);
 
         // Fetch teachers' email addresses
         const teachers = await fetchAllTeachersEmail(schoolName);
@@ -92,6 +91,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         // Log a message indicating the failure
         console.error('Failed to fetch data from MongoDB.');
 
-        return null;
+        // Return an error component or null
+        return <div>Error: Failed to fetch data from MongoDB. Please check the console for details.</div>;
     }
 }

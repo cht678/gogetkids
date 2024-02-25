@@ -5,49 +5,58 @@ import { ObjectId } from 'mongodb';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const id = new ObjectId(params.id);
+    try {
+        const id = new ObjectId(params.id);
 
-  const classObject = await fetchClassById(id);
+        // Fetch session token
+        const sessionName = 'currentSession';
+        const token = await fetchSessionToken(sessionName);
+        console.log('Session token:', token);
 
-  // Fetch session token
-  const sessionName = 'currentSession'; // Adjust session name according to your setup
-  const token = await fetchSessionToken(sessionName);
-  console.log('Session token:', token);
+        if (!token) {
+            console.error('Session token is null or undefined.');
+            return null;
+        }
 
-  // Verify and decode the token
-  let decodedToken: JwtPayload | string; // Explicitly type decodedToken
-  try {
-    // Type assertion to assert that token is a non-null string
-    decodedToken = jwt.verify(token!, process.env.TOKEN_SECRET!) as JwtPayload;
-    console.log('Decoded token data:', decodedToken);
-  } catch (error) {
-    console.error('Error verifying token:', error);
-    // Handle error if token verification fails or token is null
-    return null; // Or handle the error in some other way
-  }
+        // Verify and decode the token
+        let decodedToken: JwtPayload | string;
+        decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
+        console.log('Decoded token data:', decodedToken);
 
-  // Extract user ID from decoded token
-  const sessionUserId = typeof decodedToken === 'string' ? decodedToken : decodedToken?.id;
+        // Check token expiry
+        if (decodedToken.exp && decodedToken.exp < Math.floor(Date.now() / 1000)) {
+            console.error('Token has expired.');
+            return null;
+        }
 
-  // Fetch the company name using the user ID
-  const schoolName = await fetchSchoolName(sessionUserId);
-  console.log('Company Name:', schoolName);
+        // Extract user ID from decoded token
+        const sessionUserId = typeof decodedToken === 'string' ? decodedToken : decodedToken?.id;
 
-  const teachers = await fetchAllTeachersEmail(schoolName);
+        // Fetch the company name using the user ID
+        const schoolName = await fetchSchoolName(sessionUserId);
+        console.log('Company Name:', schoolName);
 
-  return (
-    <main>
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: 'Classes', href: '/dashboard/classes' },
-          {
-            label: 'Edit Class',
-            href: `/dashboard/classes/${params.id}/edit`,
-            active: true,
-          },
-        ]}
-      />
-      <Form classroom={classObject} teachers={teachers} />
-    </main>
-  );
+        const teachers = await fetchAllTeachersEmail(schoolName);
+
+        const classObject = await fetchClassById(id);
+
+        return (
+            <main>
+                <Breadcrumbs
+                    breadcrumbs={[
+                        { label: 'Classes', href: '/dashboard/classes' },
+                        {
+                            label: 'Edit Class',
+                            href: `/dashboard/classes/${params.id}/edit`,
+                            active: true,
+                        },
+                    ]}
+                />
+                <Form classroom={classObject} teachers={teachers} />
+            </main>
+        );
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
 }

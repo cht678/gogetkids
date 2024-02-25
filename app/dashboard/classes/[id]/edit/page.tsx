@@ -7,14 +7,41 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 
 const mongoDBUrl = 'mongodb+srv://systemadmin1:Password123456@cluster0.3fkxfwy.mongodb.net/';
 
+let client: MongoClient;
+
+async function connectToMongoDB() {
+    client = new MongoClient(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true } as MongoClientOptions);
+
+    // Set up event listeners for MongoDB connection events
+    client.on('close', () => {
+        console.error('MongoDB connection closed');
+        // Attempt to reconnect or handle accordingly
+        connectToMongoDB();
+    });
+
+    client.on('error', (err) => {
+        console.error('MongoDB connection error:', err);
+        // Attempt to reconnect or handle accordingly
+        connectToMongoDB();
+    });
+
+    try {
+        await client.connect();
+        console.log('Connected to MongoDB');
+    } catch (error) {
+        console.error('Error connecting to MongoDB:', error);
+        // Attempt to reconnect or handle accordingly
+        connectToMongoDB();
+    }
+}
+
 export default async function Page({ params }: { params: { id: string } }) {
     try {
         // Ensure params.id is a valid ObjectId
         const id = new ObjectId(params.id);
 
         // Connect to MongoDB
-        const client = new MongoClient(mongoDBUrl, { useNewUrlParser: true, useUnifiedTopology: true } as MongoClientOptions);
-        await client.connect();
+        await connectToMongoDB();
 
         // Log a message indicating the start of the operation
         console.log('Fetching data from MongoDB...');

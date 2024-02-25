@@ -1,51 +1,30 @@
 import Form from '@/app/ui/students/create-form';
 import Breadcrumbs from '@/app/ui/students/breadcrumbs';
-import { fetchAllParentsEmail, fetchAllClassNames, fetchSessionToken, fetchSchoolName } from '@/app/lib/data';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import { fetchAllParentsEmail, fetchAllClassNames, fetchSchoolName } from '@/app/lib/data';
 
 export default async function Page() {
+    // Fetch the company name
+    const schoolName = await fetchSchoolName();
+    console.log('Company Name:', schoolName);
 
-  // Fetch session token
-  const sessionName = 'currentSession'; // Adjust session name according to your setup
-  const token = await fetchSessionToken(sessionName);
-  console.log('Session token:', token);
+    // Fetch parents and classes
+    const parents = await fetchAllParentsEmail();
+    const classes = await fetchAllClassNames(schoolName);
 
-  // Verify and decode the token
-  let decodedToken: JwtPayload | string; // Explicitly type decodedToken
-  try {
-    // Type assertion to assert that token is a non-null string
-    decodedToken = jwt.verify(token!, process.env.TOKEN_SECRET!) as JwtPayload;
-    console.log('Decoded token data:', decodedToken);
-  } catch (error) {
-    console.error('Error verifying token:', error);
-    // Handle error if token verification fails or token is null
-    return null; // Or handle the error in some other way
-  }
-
-  // Extract user ID from decoded token
-  const sessionUserId = typeof decodedToken === 'string' ? decodedToken : decodedToken?.id;
-
-  // Fetch the company name using the user ID
-  const schoolName = await fetchSchoolName();
-  console.log('Company Name:', schoolName);
-
-  const parents = await fetchAllParentsEmail();
-  const classes = await fetchAllClassNames(schoolName);
-
-  return (
-    <main>
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: 'Students', href: '/dashboard/students' },
-          {
-            label: 'Create Student',
-            href: '/dashboard/students/create',
-            active: true,
-          },
-        ]}
-      />
-      {/* Pass in fetched parents and classes in to Form */}
-      <Form parents={parents} classes={classes}/>
-    </main>
-  );
+    return (
+        <main>
+            <Breadcrumbs
+                breadcrumbs={[
+                    { label: 'Students', href: '/dashboard/students' },
+                    {
+                        label: 'Create Student',
+                        href: '/dashboard/students/create',
+                        active: true,
+                    },
+                ]}
+            />
+            {/* Pass in fetched parents and classes to Form */}
+            <Form parents={parents} classes={classes} />
+        </main>
+    );
 }

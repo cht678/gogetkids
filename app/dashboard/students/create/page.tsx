@@ -7,10 +7,12 @@ export default async function Page() {
     const schoolName = await fetchSchoolName();
     console.log('Company Name:', schoolName);
 
+    console.log("testing123", schoolName)
     // Fetch parents and classes
     const parents = await fetchAllParentsEmail();
     const classes = await fetchAllClassNames(schoolName);
-
+    console.log("testing223", parents)
+    console.log("testing323", classes)
     return (
         <main>
             <Breadcrumbs

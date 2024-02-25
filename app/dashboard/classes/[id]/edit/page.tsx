@@ -1,7 +1,7 @@
 import { MongoClient, MongoClientOptions } from 'mongodb';
 import Form from '@/app/ui/classes/edit-form';
 import Breadcrumbs from '@/app/ui/classes/breadcrumbs';
-import { fetchClassById, fetchAllTeachersEmail, fetchSessionToken, fetchSchoolName } from '@/app/lib/data';
+import { fetchClassById, fetchAllTeachersEmail, fetchSchoolName, fetchUserCredentials } from '@/app/lib/data';
 import { ObjectId } from 'mongodb';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
@@ -35,7 +35,10 @@ async function connectToMongoDB() {
     }
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: {
+        password: string;
+        username: string;
+        id: string } }) {
     try {
         // Ensure params.id is a valid ObjectId
         const id = new ObjectId(params.id);
@@ -46,40 +49,23 @@ export default async function Page({ params }: { params: { id: string } }) {
         // Log a message indicating the start of the operation
         console.log('Fetching data from MongoDB...');
 
-        // Fetch session token
-        const sessionName = 'currentSession';
-        const token = await fetchSessionToken(sessionName);
+        // Fetch user credentials using some form of authentication (e.g., username/password)
+        const userCredentials = await fetchUserCredentials(params.username, params.password);
 
-        // Log session token
-        console.log('Session token:', token);
-
-        // Check if session token is null or undefined
-        if (!token) {
-            console.error('Session token is null or undefined.');
-            throw new Error('Session token is null or undefined.');
+        // Check if user credentials are valid
+        if (!userCredentials) {
+            console.error('Invalid username or password.');
+            throw new Error('Invalid username or password.');
         }
 
-        // Verify and decode the token
-        let decodedToken: JwtPayload | string;
-        try {
-            decodedToken = jwt.verify(token, process.env.TOKEN_SECRET!) as JwtPayload;
-            console.log('Decoded token data:', decodedToken);
-        } catch (error) {
-            console.error('Error verifying token:', error);
-            throw new Error('Error verifying token.');
-        }
+        // Generate a JWT token
+        const token = jwt.sign({ id: userCredentials._id, username: userCredentials.username }, process.env.TOKEN_SECRET!, { expiresIn: '1h' });
 
-        // Check token expiry
-        if (decodedToken.exp && decodedToken.exp < Math.floor(Date.now() / 1000)) {
-            console.error('Token has expired.');
-            throw new Error('Token has expired.');
-        }
-
-        // Extract user ID from decoded token
-        const sessionUserId = typeof decodedToken === 'string' ? decodedToken : decodedToken?.id;
+        // Log the token
+        console.log('Generated token:', token);
 
         // Fetch the school name using the user ID
-        const schoolName = await fetchSchoolName(sessionUserId);
+        const schoolName = await fetchSchoolName(userCredentials._id);
         console.log('School Name:', schoolName);
 
         // Fetch teachers' email addresses

@@ -1,5 +1,5 @@
 import { connect, disconnect } from './dbConfig';
-import { Db, ObjectId } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const ITEMS_PER_PAGE = 6;
 const MAX_RETRIES = 10;
@@ -358,6 +358,22 @@ export async function fetchAllClassNames(schoolName: string) {
   });
 }
 
+export async function fetchUserCredentials(username: string, password: string): Promise<any | null> {
+  try {
+    const client: MongoClient = await connect();
+    const db = client.db('GoGetKids');
+    const usersCollection = db.collection('users');
+
+    const user = await usersCollection.findOne({ username, password });
+
+    await client.close();
+
+    return user;
+  } catch (error) {
+    console.error('Error fetching user credentials:', error);
+    throw new Error('Failed to fetch user credentials.');
+  }
+}
 
 export async function fetchClassById(id: ObjectId) {
   return executeWithRetry(async () => {

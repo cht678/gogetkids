@@ -3,6 +3,7 @@ import Breadcrumbs from '@/app/ui/parents/breadcrumbs';
 
 export default async function Page() {
 
+
   return (
     <main>
       <Breadcrumbs

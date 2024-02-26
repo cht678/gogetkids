@@ -43,7 +43,7 @@ export default async function Page() {
           },
         ]}
       />
-      <div>{token}</div>
+      <div>我的测试啊:{token}</div>
       {/* <Form students={students} /> */}
     </main>
   );
